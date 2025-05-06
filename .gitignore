@@ -1,0 +1,24 @@
+text.txt
+# Node dependencies
+node_modules/
+
+# Environment files
+.env
+
+# Logs
+logs/
+*.log
+
+# Kafka logs & data
+/kafka-logs/
+/zookeeper-logs/
+
+/*.tgz
+
+# IDE/workspace
+.vscode/
+.idea/
+.DS_Store
+
+# System files
+Thumbs.db
