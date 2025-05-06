@@ -1,25 +1,48 @@
 <!DOCTYPE html>
 <html lang="en">
-<head>
+  <head>
     <meta charset="UTF-8" />
-    <title>Kafka Messaging</title>
-    <link rel="stylesheet" href="/style.css" />
-</head>
-<body>
-    <h1>Kafka Message System</h1>
-    <form action="/produce" method="POST">
+    <title>Kafka Crypto Dashboard</title>
+    <link rel="stylesheet" href="styles/style.css" />
+  </head>
+  <body>
+    <div class="main-container">
+      <h1 style="display: flex; justify-content: center">
+        Kafka Message Producer
+      </h1>
+      <form style="display: inline" action="/produce" method="POST">
         <input
-        type="text"
-        name="message"
-        placeholder="Enter a message"
-        required
+          type="text"
+          name="message"
+          placeholder="Enter a message"
+          required
         />
         <button type="submit">Send</button>
-    </form>
-    <div class="messages">
-        <% messages.forEach(msg => { %>
-        <p><%= msg.message %></p>
-        <% }) %>
+      </form>
+      <form style="display: inline" action="/clear-messages" method="POST">
+        <button type="submit">Clear</button>
+      </form>
+
+      <div class="consumer">
+        <h2>Received Messages</h2>
+        <% messages.forEach((m,index) => { %> <% if (m.message) { %>
+        <p>User<%= index %>: <%= m.message %></p>
+        <% } %> <% }) %>
+      </div>
     </div>
-</body>
+
+    <div class="crypto-widget">
+      <h2>Crypto Prices (Real-time)</h2>
+      <% const latestCrypto = messages.findLast(m => m.usd && m.eur && m.gbp);
+      %> <% if (latestCrypto) { %>
+      <p><strong>Time:</strong> <%= latestCrypto.time %></p>
+      <p>USD: <%= latestCrypto.usd %></p>
+      <p>EUR: <%= latestCrypto.eur %></p>
+      <p>GBP: <%= latestCrypto.gbp %></p>
+      <% } else { %>
+      <p>Loading crypto data...</p>
+      <% } %>
+    </div>
+    <script src="/script.js"></script>
+  </body>
 </html>
